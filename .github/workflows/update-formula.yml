@@ -1,0 +1,104 @@
+name: Update Formula
+
+on:
+  repository_dispatch:
+    types: [formula-update]
+  workflow_dispatch:
+    inputs:
+      formula:
+        description: 'Formula name (proyecto or bruja)'
+        required: true
+        type: choice
+        options:
+          - proyecto
+          - bruja
+      version:
+        description: 'Version (e.g., v1.0.0)'
+        required: true
+      repo:
+        description: 'Source repository (e.g., intrusive-memory/SwiftProyecto)'
+        required: true
+
+jobs:
+  update:
+    name: Update Formula
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set Variables
+        id: vars
+        run: |
+          if [ "${{ github.event_name }}" == "repository_dispatch" ]; then
+            echo "formula=${{ github.event.client_payload.formula }}" >> $GITHUB_OUTPUT
+            echo "version=${{ github.event.client_payload.version }}" >> $GITHUB_OUTPUT
+            echo "repo=${{ github.event.client_payload.repo }}" >> $GITHUB_OUTPUT
+          else
+            echo "formula=${{ inputs.formula }}" >> $GITHUB_OUTPUT
+            echo "version=${{ inputs.version }}" >> $GITHUB_OUTPUT
+            echo "repo=${{ inputs.repo }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Download and Compute SHA256
+        id: sha
+        run: |
+          FORMULA="${{ steps.vars.outputs.formula }}"
+          VERSION="${{ steps.vars.outputs.version }}"
+          VERSION_NUM="${VERSION#v}"
+          REPO="${{ steps.vars.outputs.repo }}"
+
+          URL="https://github.com/${REPO}/releases/download/${VERSION}/${FORMULA}-${VERSION_NUM}-arm64-macos.tar.gz"
+
+          echo "Downloading from: $URL"
+          curl -sL "$URL" -o binary.tar.gz
+
+          if [ ! -s binary.tar.gz ]; then
+            echo "Error: Failed to download binary"
+            exit 1
+          fi
+
+          SHA256=$(shasum -a 256 binary.tar.gz | cut -d' ' -f1)
+
+          echo "sha256=${SHA256}" >> $GITHUB_OUTPUT
+          echo "url=${URL}" >> $GITHUB_OUTPUT
+          echo "version_num=${VERSION_NUM}" >> $GITHUB_OUTPUT
+
+          echo "SHA256: $SHA256"
+
+      - name: Update Formula
+        run: |
+          FORMULA="${{ steps.vars.outputs.formula }}"
+          VERSION_NUM="${{ steps.sha.outputs.version_num }}"
+          SHA256="${{ steps.sha.outputs.sha256 }}"
+          URL="${{ steps.sha.outputs.url }}"
+
+          FORMULA_FILE="Formula/${FORMULA}.rb"
+
+          echo "Updating $FORMULA_FILE"
+          echo "  URL: $URL"
+          echo "  SHA256: $SHA256"
+          echo "  Version: $VERSION_NUM"
+
+          # Update the formula file using sed
+          sed -i'' -e "s|url \".*\"|url \"${URL}\"|" "$FORMULA_FILE"
+          sed -i'' -e "s|sha256 \".*\"|sha256 \"${SHA256}\"|" "$FORMULA_FILE"
+          sed -i'' -e "s|version \".*\"|version \"${VERSION_NUM}\"|" "$FORMULA_FILE"
+
+          echo "Updated formula:"
+          cat "$FORMULA_FILE"
+
+      - name: Commit and Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          FORMULA="${{ steps.vars.outputs.formula }}"
+          VERSION="${{ steps.vars.outputs.version }}"
+
+          git add Formula/${FORMULA}.rb
+          git diff --staged --quiet && echo "No changes to commit" && exit 0
+
+          git commit -m "Update ${FORMULA} to ${VERSION}"
+          git push
