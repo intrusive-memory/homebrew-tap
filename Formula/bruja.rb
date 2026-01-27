@@ -11,6 +11,8 @@ class Bruja < Formula
 
   def install
     bin.install "bruja"
+    # Install Metal shader bundle next to binary (required for MLX GPU acceleration)
+    bin.install "mlx-swift_Cmlx.bundle"
   end
 
   test do

@@ -11,6 +11,8 @@ class Proyecto < Formula
 
   def install
     bin.install "proyecto"
+    # Install Metal shader bundle next to binary (required for MLX GPU acceleration)
+    bin.install "mlx-swift_Cmlx.bundle"
   end
 
   test do
