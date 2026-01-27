@@ -1,10 +1,10 @@
 class Bruja < Formula
   desc "CLI tool for on-device LLM queries on Apple Silicon"
   homepage "https://github.com/intrusive-memory/SwiftBruja"
-  url "https://github.com/intrusive-memory/SwiftBruja/releases/download/v1.0.2/bruja-1.0.2-arm64-macos.tar.gz"
-  sha256 "a2bde9452f26f5ed0e48a064adc433256e20eb0a1346a429fb6b2d0f51abd26c"
+  url "https://github.com/intrusive-memory/SwiftBruja/releases/download/v1.0.3/bruja-1.0.3-arm64-macos.tar.gz"
+  sha256 "78430a379352ad0a67333a58a0a1ede2d50936a278d57d331308ee8d698ddfba"
   license "MIT"
-  version "1.0.2"
+  version "1.0.3"
 
   depends_on arch: :arm64
   depends_on macos: :sequoia
