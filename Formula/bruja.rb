@@ -7,7 +7,8 @@ class Bruja < Formula
   version "1.0.9"
 
   depends_on arch: :arm64
-  depends_on macos: :sequoia
+  depends_on macos: :tahoe
+  depends_on "mlx"
 
   def install
     # Install binary and Metal bundle to libexec (keeps them colocated)
