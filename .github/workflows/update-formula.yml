@@ -12,6 +12,7 @@ on:
         options:
           - proyecto
           - bruja
+          - echada
       version:
         description: 'Version (e.g., v1.0.0)'
         required: true
