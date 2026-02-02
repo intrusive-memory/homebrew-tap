@@ -1,10 +1,10 @@
 class Hablare < Formula
   desc "CLI tool for on-device text-to-speech on Apple Silicon via Qwen3-TTS"
   homepage "https://github.com/intrusive-memory/SwiftHablare"
-  url "https://github.com/intrusive-memory/SwiftHablare/releases/download/v5.5.2/hablare-5.5.2-arm64-macos.tar.gz"
-  sha256 "061e8c6d8af70fa9a27d96bed34d2464819579b4f569681700f2611382230591"
+  url "https://github.com/intrusive-memory/SwiftHablare/releases/download/v5.6.0/hablare-5.6.0-arm64-macos.tar.gz"
+  sha256 "895435aa334351cb17cc59a911993b9eadf39ecd4454ffb0317ca26042bcd5b9"
   license "MIT"
-  version "5.5.2"
+  version "5.6.0"
 
   depends_on arch: :arm64
   depends_on macos: :tahoe
