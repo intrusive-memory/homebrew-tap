@@ -8,7 +8,6 @@ class Bruja < Formula
 
   depends_on arch: :arm64
   depends_on macos: :tahoe
-  depends_on "mlx"
 
   def install
     # Install binary and Metal bundle to libexec (keeps them colocated)
