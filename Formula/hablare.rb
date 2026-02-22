@@ -20,6 +20,18 @@ class Hablare < Formula
     (bin/"hablare").write_env_script libexec/"hablare", {}
   end
 
+  def caveats
+    <<~EOS
+      hablare requires Apple Silicon (M1 or later) and macOS Tahoe (26.0+).
+
+      On first run, hablare will download ML models from Hugging Face:
+        - LLM for text analysis (~4 GB) to ~/Library/SharedModels/
+        - TTS model for speech (~3.5 GB) to ~/Library/SharedModels/
+
+      This is a one-time download and requires an internet connection.
+    EOS
+  end
+
   test do
     system "#{bin}/hablare", "--version"
   end

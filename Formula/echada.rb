@@ -20,6 +20,18 @@ class Echada < Formula
     (bin/"echada").write_env_script libexec/"echada", {}
   end
 
+  def caveats
+    <<~EOS
+      echada requires Apple Silicon (M1 or later) and macOS Tahoe (26.0+).
+
+      On first run, echada will download ML models from Hugging Face:
+        - LLM for character extraction (~4 GB) to ~/Library/SharedModels/
+        - TTS model for voice generation (~3.5 GB) to ~/Library/SharedModels/
+
+      This is a one-time download and requires an internet connection.
+    EOS
+  end
+
   test do
     system "#{bin}/echada", "--version"
   end

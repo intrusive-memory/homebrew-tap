@@ -19,6 +19,16 @@ class Bruja < Formula
     (bin/"bruja").write_env_script libexec/"bruja", {}
   end
 
+  def caveats
+    <<~EOS
+      bruja requires Apple Silicon (M1 or later) and macOS Tahoe (26.0+).
+
+      On first run, bruja will download an LLM (~4 GB) from Hugging Face
+      to ~/Library/SharedModels/. This is a one-time download and requires
+      an internet connection.
+    EOS
+  end
+
   test do
     system "#{bin}/bruja", "--version"
   end

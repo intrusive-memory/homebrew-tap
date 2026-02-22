@@ -20,6 +20,16 @@ class Proyecto < Formula
     (bin/"proyecto").write_env_script libexec/"proyecto", {}
   end
 
+  def caveats
+    <<~EOS
+      proyecto requires Apple Silicon (M1 or later) and macOS Tahoe (26.0+).
+
+      On first run, proyecto will download an LLM (~4 GB) from Hugging Face
+      to ~/Library/SharedModels/. This is a one-time download and requires
+      an internet connection.
+    EOS
+  end
+
   test do
     system "#{bin}/proyecto", "--version"
   end

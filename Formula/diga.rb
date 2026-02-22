@@ -25,7 +25,7 @@ class Diga < Formula
       diga requires Apple Silicon (M1 or later) and macOS Tahoe (26.0+).
 
       On first run, diga will download the Qwen3-TTS model (~3.5 GB)
-      from Hugging Face to ~/.cache/huggingface/hub/. This is a one-time
+      from Hugging Face to ~/Library/SharedModels/. This is a one-time
       download and requires an internet connection.
 
       Use diga as a drop-in replacement for the 'say' command:
