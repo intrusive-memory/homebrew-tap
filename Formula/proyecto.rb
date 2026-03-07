@@ -1,10 +1,10 @@
 class Proyecto < Formula
   desc "CLI tool for analyzing directories and generating PROJECT.md files using local LLM"
   homepage "https://github.com/intrusive-memory/SwiftProyecto"
-  url "https://github.com/intrusive-memory/SwiftProyecto/releases/download/v3.1.0/proyecto-3.1.0-arm64-macos.tar.gz"
-  sha256 "65726ff7413fc2fd18f4cc3a0e24896834db459849cd2b089884c7fe24f78924"
+  url "https://github.com/intrusive-memory/SwiftProyecto/releases/download/v3.1.1/proyecto-3.1.1-arm64-macos.tar.gz"
+  sha256 "9103213501f9cb06c841c4e1f1699b99d8fc0464f00c93bde85299a94b790c0d"
   license "MIT"
-  version "3.1.0"
+  version "3.1.1"
 
   depends_on arch: :arm64
   depends_on macos: :tahoe
