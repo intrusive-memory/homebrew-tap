@@ -12,6 +12,7 @@ This tap provides Homebrew formulas for CLI tools from [Intrusive Memory](https:
 | `hablare` | CLI tool for voice provider abstraction and TTS |
 | `diga` | Drop-in replacement for Apple's say command using Qwen3-TTS |
 | `vox` | CLI tool for working with .vox voice identity files |
+| `secuencia` | CLI tool for professional media timeline generation and export |
 
 ## Requirements
 
@@ -27,6 +28,7 @@ brew tap intrusive-memory/tap
 # Install tools
 brew install proyecto
 brew install bruja
+brew install secuencia
 brew install vox
 ```
 
@@ -45,6 +47,7 @@ brew upgrade
 - [SwiftHablare](https://github.com/intrusive-memory/SwiftHablare) - Source for `hablare`
 - [SwiftVoxAlta](https://github.com/intrusive-memory/SwiftVoxAlta) - Source for `diga`
 - [vox-format](https://github.com/intrusive-memory/vox-format) - Source for `vox`
+- [SwiftSecuencia](https://github.com/intrusive-memory/SwiftSecuencia) - Source for `secuencia`
 
 ## License
 
