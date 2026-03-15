@@ -16,6 +16,7 @@ on:
           - hablare
           - diga
           - vox
+          - secuencia
       version:
         description: 'Version (e.g., v1.0.0)'
         required: true
