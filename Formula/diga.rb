@@ -1,10 +1,10 @@
 class Diga < Formula
   desc "Drop-in replacement for Apple's say command using Qwen3-TTS for AI-generated speech"
   homepage "https://github.com/intrusive-memory/SwiftVoxAlta"
-  url "https://github.com/intrusive-memory/SwiftVoxAlta/releases/download/v0.9.2/diga-0.9.2-arm64-macos.tar.gz"
-  sha256 "c8b54cc2dfbacf4ba799cd64a59b5d991938d0b0ab34d03d1ed293f9c77309ec"
+  url "https://github.com/intrusive-memory/SwiftVoxAlta/releases/download/v0.9.3/diga-0.9.3-arm64-macos.tar.gz"
+  sha256 "52c1f735f12eab855eab1dfb9ab0d75016b893578e05772eadbb209065968493"
   license "MIT"
-  version "0.9.2"
+  version "0.9.3"
 
   depends_on arch: :arm64
   depends_on macos: :tahoe
