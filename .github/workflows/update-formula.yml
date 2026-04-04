@@ -10,13 +10,14 @@ on:
         required: true
         type: choice
         options:
-          - proyecto
           - bruja
-          - echada
-          - hablare
           - diga
-          - vox
+          - echada
+          - glosa
+          - hablare
+          - proyecto
           - secuencia
+          - vox
       version:
         description: 'Version (e.g., v1.0.0)'
         required: true
