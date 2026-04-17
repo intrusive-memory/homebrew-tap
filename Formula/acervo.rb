@@ -9,7 +9,7 @@ class Acervo < Formula
   depends_on arch: :arm64
   depends_on macos: :tahoe
   depends_on "awscli"
-  depends_on "huggingface-hub"
+  depends_on "hf"
 
   def install
     bin.install "acervo"
