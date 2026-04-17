@@ -8,6 +8,8 @@ class Acervo < Formula
 
   depends_on arch: :arm64
   depends_on macos: :tahoe
+  depends_on "awscli-v2"
+  depends_on "huggingface-hub"
 
   def install
     bin.install "acervo"
@@ -17,14 +19,14 @@ class Acervo < Formula
     <<~EOS
       acervo requires Apple Silicon (M1 or later) and macOS Tahoe (26.0+).
 
-      The following tools are required at runtime:
-        aws   AWS CLI v2 for R2 CDN uploads:  brew install awscli
-        hf    HuggingFace CLI for downloads:  brew install huggingface-hub
+      The following dependencies are automatically installed:
+        - AWS CLI v2 for R2 CDN uploads
+        - HuggingFace CLI for model downloads
 
-      Set these environment variables before running upload or ship commands:
-        R2_ACCESS_KEY_ID
-        R2_SECRET_ACCESS_KEY
-        HF_TOKEN
+      Required environment variables for upload/ship commands:
+        R2_ACCESS_KEY_ID      Cloudflare R2 access key
+        R2_SECRET_ACCESS_KEY  Cloudflare R2 secret key
+        HF_TOKEN              HuggingFace API token
     EOS
   end
 
