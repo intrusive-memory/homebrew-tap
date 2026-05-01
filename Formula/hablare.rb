@@ -6,6 +6,13 @@ class Hablare < Formula
   license "MIT"
   version "5.6.0"
 
+  # SwiftHablare 6.0 is library-only — the hablare binary was a 49-line registry
+  # debug tool, never a real TTS CLI. For on-device TTS at the command line,
+  # install `diga` from the same tap (SwiftVoxAlta-based, real Qwen3-TTS).
+  disable! date: "2026-04-30",
+           because: "SwiftHablare 6.0 dropped the hablare CLI binary. " \
+                    "Install `diga` instead: brew install intrusive-memory/tap/diga"
+
   depends_on arch: :arm64
   depends_on macos: :tahoe
   depends_on "mlx"
