@@ -13,6 +13,7 @@ This tap provides Homebrew formulas for CLI tools from [Intrusive Memory](https:
 | `diga` | Drop-in replacement for Apple's say command using Qwen3-TTS |
 | `vox` | CLI tool for working with .vox voice identity files |
 | `secuencia` | CLI tool for professional media timeline generation and export |
+| `vinetas` | CLI for generating storyboard panels and comic art with FLUX.2 + PixArt-Sigma |
 
 ## Requirements
 
@@ -48,6 +49,7 @@ brew upgrade
 - [SwiftVoxAlta](https://github.com/intrusive-memory/SwiftVoxAlta) - Source for `diga`
 - [vox-format](https://github.com/intrusive-memory/vox-format) - Source for `vox`
 - [SwiftSecuencia](https://github.com/intrusive-memory/SwiftSecuencia) - Source for `secuencia`
+- [SwiftVinetas](https://github.com/intrusive-memory/SwiftVinetas) - Source for `vinetas`
 
 ## License
 
