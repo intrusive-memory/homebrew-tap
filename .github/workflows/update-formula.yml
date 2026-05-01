@@ -18,6 +18,7 @@ on:
           - hablare
           - proyecto
           - secuencia
+          - vinetas
           - vox
       version:
         description: 'Version (e.g., v1.0.0)'
