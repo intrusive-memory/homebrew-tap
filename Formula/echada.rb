@@ -1,10 +1,10 @@
 class Echada < Formula
   desc "CLI tool for AI-powered cast extraction and voice matching for screenplays"
   homepage "https://github.com/intrusive-memory/SwiftEchada"
-  url "https://github.com/intrusive-memory/SwiftEchada/releases/download/v0.10.4/echada-0.10.4-arm64-macos.tar.gz"
-  sha256 "67f69032fb66e105623dff0f151f4a49627c17b97844f82434ecd0f1272ca6e1"
+  url "https://github.com/intrusive-memory/SwiftEchada/releases/download/v0.10.5/echada-0.10.5-arm64-macos.tar.gz"
+  sha256 "2d0074badf6fda8279b8acd0ea985c1ea69d184060eedc7f822a18e71f063c88"
   license "MIT"
-  version "0.10.4"
+  version "0.10.5"
 
   depends_on arch: :arm64
   depends_on macos: :tahoe
