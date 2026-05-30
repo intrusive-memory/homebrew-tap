@@ -1,10 +1,10 @@
 class Acervo < Formula
   desc "CLI tool for downloading, verifying, and mirroring AI models to the intrusive-memory CDN"
   homepage "https://github.com/intrusive-memory/SwiftAcervo"
-  url "https://github.com/intrusive-memory/SwiftAcervo/releases/download/v0.18.2/acervo-0.18.2-arm64-macos.tar.gz"
-  sha256 "1fce7014febe6e14b0b3925053efc6efdce3b115020f63f7c43083d92c6da4d2"
+  url "https://github.com/intrusive-memory/SwiftAcervo/releases/download/v0.19.0/acervo-0.19.0-arm64-macos.tar.gz"
+  sha256 "91f814291ec8215d3cac1da8864ce557538033b3b015c396897a5d2906570127"
   license "MIT"
-  version "0.18.2"
+  version "0.19.0"
 
   depends_on arch: :arm64
   depends_on macos: :tahoe
