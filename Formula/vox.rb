@@ -1,10 +1,10 @@
 class Vox < Formula
   desc "CLI tool for working with .vox voice identity files"
   homepage "https://github.com/intrusive-memory/vox-format"
-  url "https://github.com/intrusive-memory/vox-format/releases/download/v0.1.0/vox-0.1.0-arm64-macos.tar.gz"
-  sha256 "PLACEHOLDER"
+  url "https://github.com/intrusive-memory/vox-format/releases/download/v0.4.1/vox-0.4.1-arm64-macos.tar.gz"
+  sha256 "3ab2b0af2d9dfd06f24ee3184570d997ea26e8563a5eb5c90541112594f7d8d2"
   license "CC0-1.0"
-  version "0.1.0"
+  version "0.4.1"
 
   depends_on arch: :arm64
   depends_on macos: :ventura
