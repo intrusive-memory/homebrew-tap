@@ -1,10 +1,10 @@
 class Secuencia < Formula
   desc "CLI tool for professional media timeline generation and export"
   homepage "https://github.com/intrusive-memory/SwiftSecuencia"
-  url "https://github.com/intrusive-memory/SwiftSecuencia/releases/download/v3.4.0/secuencia-3.4.0-arm64-macos.tar.gz"
-  sha256 "a4b2eceb36a17f2b72d361efcaf969ff7ca866c0f7dfe30b9d4566f71a2e6039"
+  url "https://github.com/intrusive-memory/SwiftSecuencia/releases/download/v3.5.0/secuencia-3.5.0-arm64-macos.tar.gz"
+  sha256 "e97936f64f674af96c48ca86b213c5a00eb1fdb8d0065acea575e5154e5d636f"
   license "MIT"
-  version "3.4.0"
+  version "3.5.0"
 
   depends_on arch: :arm64
   depends_on macos: :tahoe
