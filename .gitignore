@@ -1,0 +1,9 @@
+# Coverage / profiling artifacts
+*.profraw
+*.profdata
+
+# Stray nested checkouts
+/homebrew-tap/
+
+# macOS
+.DS_Store
