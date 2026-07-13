@@ -1,9 +1,9 @@
 class Glosa < Formula
   desc "GLOSA performance notation compiler and stage director for screenplays"
   homepage "https://github.com/intrusive-memory/glosa-tools"
-  url "https://github.com/intrusive-memory/glosa-tools/releases/download/v0.5.1/glosa-0.5.1-arm64-macos.tar.gz"
-  sha256 "1ff2dced3c3c6fd405b02baa18cde6e38c7f00705f81d14c41e0379d37a08e5d"
-  version "0.5.1"
+  url "https://github.com/intrusive-memory/glosa-tools/releases/download/v0.5.2/glosa-0.5.2-arm64-macos.tar.gz"
+  sha256 "fe949b9d689cff3a79e0d01f31ebd5d6fb6b3dfd1c21465a5cb4d577075a540c"
+  version "0.5.2"
 
   depends_on arch: :arm64
   depends_on macos: :tahoe
