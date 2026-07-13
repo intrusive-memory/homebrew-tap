@@ -9,10 +9,13 @@ class Glosa < Formula
   depends_on macos: :tahoe
 
   def install
-    # Install binary and resource bundle to libexec (keeps them colocated)
-    # Bundle.module resolves resources relative to the binary's actual location
+    # Install the binary and ALL its resource bundles to libexec, colocated so
+    # Bundle.module resolves relative to the binary's real location. Critically
+    # this includes mlx-swift_Cmlx.bundle (default.metallib) — without it the
+    # LLM subcommands die with "Failed to load the default metallib" — plus the
+    # GlosaDirector glossary and the swift-transformers/crypto/ZIP bundles.
     libexec.install "glosa"
-    libexec.install "glosa-tools_GlosaDirector.bundle" if File.exist?("glosa-tools_GlosaDirector.bundle")
+    Dir["*.bundle"].each { |b| libexec.install b }
     # Create wrapper script in bin that execs the real binary
     (bin/"glosa").write_env_script libexec/"glosa", {}
   end
