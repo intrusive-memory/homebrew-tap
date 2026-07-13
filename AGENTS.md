@@ -32,7 +32,7 @@ homebrew-tap/
 | `bruja` | [SwiftBruja](https://github.com/intrusive-memory/SwiftBruja) | 1.8.1 |
 | `diga` | [SwiftVoxAlta](https://github.com/intrusive-memory/SwiftVoxAlta) | 0.14.0 |
 | `echada` | [SwiftEchada](https://github.com/intrusive-memory/SwiftEchada) | 0.14.1 |
-| `glosa` | [glosa-av](https://github.com/intrusive-memory/glosa-av) | 0.4.0 |
+| `glosa` | [glosa-tools](https://github.com/intrusive-memory/glosa-tools) | 0.5.0 |
 | `hablare` | [SwiftHablare](https://github.com/intrusive-memory/SwiftHablare) | 5.6.0 |
 | `proyecto` | [SwiftProyecto](https://github.com/intrusive-memory/SwiftProyecto) | 4.1.0 |
 | `secuencia` | [SwiftSecuencia](https://github.com/intrusive-memory/SwiftSecuencia) | 3.3.0 |
