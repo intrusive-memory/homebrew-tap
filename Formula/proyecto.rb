@@ -8,15 +8,15 @@ class Proyecto < Formula
 
   depends_on arch: :arm64
   depends_on macos: :tahoe
-  depends_on "mlx"
 
   def install
-    # Install binary and Metal bundle to libexec (keeps them colocated)
-    # MLX resolves the Metal shader bundle relative to the binary's actual location
-    # Using libexec ensures dladdr/Bundle.main resolve to where the bundle lives
+    # Install the binary plus any SwiftPM resource bundles shipped alongside it
+    # into libexec, so Bundle.module resolves them relative to the real binary.
+    # The bundle set varies by release (e.g. ZIPFoundation); glob rather than
+    # hard-code any single name so a missing/renamed bundle never breaks install.
     libexec.install "proyecto"
-    libexec.install "mlx-swift_Cmlx.bundle"
-    # Create wrapper script in bin that execs the real binary
+    Dir["*.bundle"].each { |bundle| libexec.install bundle }
+    # Wrapper in bin execs the real binary in libexec, next to its bundles.
     (bin/"proyecto").write_env_script libexec/"proyecto", {}
   end
 
