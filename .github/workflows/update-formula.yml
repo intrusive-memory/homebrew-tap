@@ -16,7 +16,9 @@ on:
           - diga
           - echada
           - glosa
-          - hablare
+          # hablare is intentionally absent: SwiftHablare went library-only at
+          # v6.1.0 and ships no binary, so the formula is disabled and must
+          # never be bumped. Use `diga` for on-device TTS at the command line.
           - proyecto
           - secuencia
           - vinetas
