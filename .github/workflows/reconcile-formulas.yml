@@ -1,0 +1,76 @@
+name: Reconcile Formulas
+
+# Pull-based counterpart to update-formula.yml.
+#
+# update-formula.yml is push-based: a source repo dispatches on release. That
+# path is fast but fails silently -- when the DEPLOY_TOKEN PAT expired in
+# July 2026, three formulas went stale for a week with no signal anywhere.
+#
+# This workflow closes that hole by reconciling every formula against its
+# source repo's latest release on a schedule. It needs no cross-repo
+# credential: every source repo is public, and the only write is to this
+# repo, which the built-in GITHUB_TOKEN already permits.
+
+on:
+  schedule:
+    # Every 6 hours. Cheap -- a no-drift run makes ~11 API calls and downloads
+    # nothing; tarballs are only fetched for formulas that actually moved.
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Report drift without committing anything'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+# Serialize runs so a scheduled tick and a manual one cannot race on git push.
+concurrency:
+  group: formula-writes
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    name: Reconcile Formulas
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Reconcile formulas against source releases
+        id: reconcile
+        env:
+          # Read-only use: looking up releases on public repos.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
+        run: ./scripts/reconcile-formulas.sh
+
+      - name: Commit and push
+        if: ${{ steps.reconcile.outputs.bumped_count != '0' && !inputs.dry_run }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # The script already staged each formula it rewrote.
+          if git diff --staged --quiet; then
+            echo "Nothing staged; nothing to push."
+            exit 0
+          fi
+
+          git diff --staged --name-only | sed 's/^/  /'
+          git commit -m "Reconcile formulas with upstream releases
+
+          Bumped by the scheduled reconciler. See the run summary for the
+          formula-by-formula report."
+          git push
+
+      - name: Fail the run if drift was found but could not be applied
+        if: ${{ steps.reconcile.outputs.warned_count != '0' }}
+        run: |
+          echo "::error::A formula is behind its source repo but the expected release asset is missing."
+          echo "This usually means the source repo stopped shipping a binary (as SwiftHablare did at v6.1.0)."
+          echo "Either restore the release asset, or disable! the formula. See the run summary."
+          exit 1

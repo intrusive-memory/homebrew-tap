@@ -30,6 +30,17 @@ on:
         description: 'Source repository (e.g., intrusive-memory/SwiftProyecto)'
         required: true
 
+# Writing formulas is a write to THIS repo, which the built-in GITHUB_TOKEN
+# covers. This job previously checked out with the org DEPLOY_TOKEN PAT, so an
+# expired PAT broke the tap's own commit path as well as the inbound dispatch.
+permissions:
+  contents: write
+
+# Shared with reconcile-formulas.yml: both push formula commits to main.
+concurrency:
+  group: formula-writes
+  cancel-in-progress: false
+
 jobs:
   update:
     name: Update Formula
@@ -37,9 +48,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.DEPLOY_TOKEN }}
+        uses: actions/checkout@v5
 
       - name: Set Variables
         id: vars
