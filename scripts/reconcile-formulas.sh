@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
-# Reconcile every formula in this tap against its source repo's latest release.
+# Reconcile every formula and cask in this tap against its source repo's latest
+# release.
 #
 # This is a PULL, not a push. Nothing outside this repo needs to notify us, and
 # nothing needs a cross-repo credential: every source repo is public, and the
@@ -108,6 +109,68 @@ for formula_file in Formula/*.rb; do
 
   git add "$formula_file"
   BUMPED+=("${formula}: ${current} -> ${latest}")
+done
+
+# Casks. Unlike a formula, a cask's `homepage` is usually a product site, so the
+# source repo comes from `url`, which must be a GitHub release download with
+# `#{version}` in it (the url line itself is never rewritten -- only version and
+# sha256). A sha256 of "PLACEHOLDER" is drift too: a new cask is committed with
+# one before its first release, possibly at the version that release will carry.
+for cask_file in Casks/*.rb; do
+  [ -e "$cask_file" ] || continue
+  cask="cask $(basename "$cask_file" .rb)"
+
+  if grep -qE '^\s*(disable|deprecate)!' "$cask_file"; then
+    SKIPPED+=("${cask}: disabled/deprecated on purpose")
+    continue
+  fi
+
+  url_template="$(perl -ne 'print "$1\n" and exit if m{^\s*url\s+"([^"]+)"}' "$cask_file")"
+  source_repo="$(printf '%s\n' "$url_template" | perl -ne 'print "$1\n" if m{^https://github\.com/([^/]+/[^/]+)/releases/download/}')"
+  if [ -z "$source_repo" ]; then
+    WARNED+=("${cask}: url is not a GitHub release download")
+    continue
+  fi
+
+  current="$(perl -ne 'print "$1\n" and exit if m{^\s*version\s+"([^"]+)"}' "$cask_file")"
+  current_sha="$(perl -ne 'print "$1\n" and exit if m{^\s*sha256\s+"([^"]+)"}' "$cask_file")"
+  if [ -z "$current" ]; then
+    WARNED+=("${cask}: no version stanza found")
+    continue
+  fi
+
+  if ! latest_tag="$(gh api "repos/${source_repo}/releases/latest" --jq '.tag_name' 2>/dev/null)"; then
+    SKIPPED+=("${cask}: ${source_repo} has no stable release")
+    continue
+  fi
+  latest="${latest_tag#v}"
+
+  if [ "$current" = "$latest" ] && [ "$current_sha" != "PLACEHOLDER" ]; then
+    OK+=("${cask}: ${current}")
+    continue
+  fi
+
+  url="${url_template//\#\{version\}/$latest}"
+  if ! curl -sfL --retry 3 --retry-delay 2 -o /tmp/cask-asset "$url" || [ ! -s /tmp/cask-asset ]; then
+    WARNED+=("${cask}: ${current} -> ${latest} available but NO ASSET at ${url}")
+    rm -f /tmp/cask-asset
+    continue
+  fi
+  sha="$(sha256_of /tmp/cask-asset)"
+  rm -f /tmp/cask-asset
+
+  if [ "$DRY_RUN" = "1" ]; then
+    BUMPED+=("${cask}: ${current} -> ${latest} (dry run, not written)")
+    continue
+  fi
+
+  SHA="$sha" VER="$latest" perl -pi -e '
+    s{^(\s*sha256\s+)".*"}{$1."\"$ENV{SHA}\""}e;
+    s{^(\s*version\s+)".*"}{$1."\"$ENV{VER}\""}e;
+  ' "$cask_file"
+
+  git add "$cask_file"
+  BUMPED+=("${cask}: ${current} -> ${latest}")
 done
 
 emit() {

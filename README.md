@@ -4,7 +4,7 @@ type: reference
 
 # Homebrew Tap for Intrusive Memory Tools
 
-This tap provides Homebrew formulas for CLI tools from [Intrusive Memory](https://github.com/intrusive-memory).
+This tap provides Homebrew formulas for CLI tools, and casks for apps, from [Intrusive Memory](https://github.com/intrusive-memory).
 
 ## Available Formulas
 
@@ -21,6 +21,16 @@ This tap provides Homebrew formulas for CLI tools from [Intrusive Memory](https:
 | `secuencia` | CLI tool for professional media timeline generation and export |
 | `vinetas` | CLI for generating storyboard panels and comic art with FLUX.2 + PixArt-Sigma |
 | `vox` | CLI tool for working with .vox voice identity files |
+
+## Available Casks
+
+| Cask | Description |
+|------|-------------|
+| `containerbodega` | Desktop app for Apple's `container` CLI |
+
+```bash
+brew install --cask intrusive-memory/tap/containerbodega
+```
 
 ## Requirements
 
@@ -70,6 +80,7 @@ brew upgrade
 - [SwiftSecuencia](https://github.com/intrusive-memory/SwiftSecuencia) - Source for `secuencia`
 - [SwiftVinetas](https://github.com/intrusive-memory/SwiftVinetas) - Source for `vinetas`
 - [vox-format](https://github.com/intrusive-memory/vox-format) - Source for `vox`
+- [ContainerBodega-releases](https://github.com/intrusive-memory/ContainerBodega-releases) - Downloads for the `containerbodega` cask
 
 ## License
 
