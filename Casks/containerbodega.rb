@@ -4,8 +4,7 @@ cask "containerbodega" do
 
   # The source repo is private; its release workflow publishes the signed,
   # notarized DMG to this public releases-only repo instead.
-  url "https://github.com/intrusive-memory/ContainerBodega-releases/releases/download/v#{version}/ContainerBodega.dmg",
-      verified: "github.com/intrusive-memory/ContainerBodega-releases/"
+  url "https://github.com/intrusive-memory/ContainerBodega-releases/releases/download/v#{version}/ContainerBodega.dmg"
   name "ContainerBodega"
   desc "Desktop app for Apple's container CLI"
   homepage "https://container-bodega.app/"
@@ -16,7 +15,7 @@ cask "containerbodega" do
   end
 
   depends_on arch: :arm64
-  depends_on macos: ">= :tahoe"
+  depends_on macos: :tahoe
 
   app "ContainerBodega.app"
 
