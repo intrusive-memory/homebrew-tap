@@ -4,7 +4,100 @@ type: reference
 
 # Agent Instructions — homebrew-tap
 
-This is a Homebrew tap for [Intrusive Memory](https://github.com/intrusive-memory) CLI tools. It distributes pre-built arm64 binaries for macOS 26 (Tahoe)+.
+This is a Homebrew tap for [Intrusive Memory](https://github.com/intrusive-memory):
+formulas that install pre-built arm64 CLI binaries, and a cask that installs the
+ContainerBodega Mac app. Everything targets macOS 26 (Tahoe)+ on Apple silicon.
+
+This file has two halves. **Installing from this tap** is for an agent setting
+up a user's machine. Everything from **Repository Structure** on is for an agent
+maintaining this repo.
+
+## Installing from this tap
+
+For an agent installing on a user's Mac. Every command below is
+non-interactive unless marked otherwise. For the human-oriented version, see
+[README.md](README.md).
+
+### Rules
+
+1. **Always use the fully qualified name**, `intrusive-memory/tap/<name>`, for
+   *every* brew command, including `uninstall`, `upgrade` and `info`. Since
+   Homebrew 6 (Tap Trust), a short name from an untrusted tap fails with
+   `Refusing to load … from untrusted tap intrusive-memory/tap`, even for
+   uninstalling something already installed. A qualified name works with no trust
+   step.
+2. **Don't run `brew trust intrusive-memory/tap` on your own initiative.**
+   Trusting a whole tap lets all of its Ruby run on the user's machine. That's
+   the user's decision; ask first, or stick to qualified names.
+3. **Check the platform first.** Nothing here installs on Intel or before
+   macOS 26, and Homebrew's refusal message is less clear than a check:
+
+   ```bash
+   [ "$(uname -m)" = arm64 ] || echo "unsupported: needs Apple silicon"
+   [ "$(sw_vers -productVersion | cut -d. -f1)" -ge 26 ] || echo "unsupported: needs macOS 26+"
+   ```
+
+4. **Never pass `--no-quarantine`** and never strip quarantine from these
+   apps. The cask is Developer ID signed and notarized, so it opens normally;
+   if Gatekeeper objects, something is wrong. Report it rather than working
+   around it.
+
+### A CLI tool (formula)
+
+```bash
+brew install intrusive-memory/tap/<formula>
+<formula> --version                                   # verify
+```
+
+The formulas are `acervo`, `ambienta`, `bruja`, `diga`, `echada`, `glosa`,
+`proyecto`, `reparto`, `secuencia`, `vinetas` and `vox`. `hablare` is **disabled**
+(its repo went library-only), so install `diga` for command-line TTS instead.
+
+### ContainerBodega (cask)
+
+ContainerBodega is a GUI for Apple's `container` CLI and needs that CLI to do
+anything. Install the CLI first. The app finds it in `/usr/local/bin` (Apple's
+.pkg) or `/opt/homebrew/bin` (Homebrew).
+
+```bash
+# 1. Apple's container CLI, unless `command -v container` already finds one
+command -v container || brew install container
+
+# 2. Start its service. Without the flag, the first start PROMPTS to download a
+#    Linux kernel and blocks an unattended run.
+container system start --enable-kernel-install
+
+# 3. The app
+brew install --cask intrusive-memory/tap/containerbodega
+```
+
+Verify:
+
+```bash
+brew list --cask --versions intrusive-memory/tap/containerbodega           # -> containerbodega <version>
+spctl -a -vv /Applications/ContainerBodega.app 2>&1 | grep -q 'source=Notarized Developer ID' \
+  && echo "notarized OK"
+container system status                               # the service is running
+```
+
+Update with `brew upgrade --cask intrusive-memory/tap/containerbodega`, and
+remove with `brew uninstall --cask intrusive-memory/tap/containerbodega`. **Don't add `--zap`
+unless the user asked for it**: it deletes the app's data in `~/Library`,
+including its list of Bodegas. It leaves `BODEGA.md` files in the user's
+repositories alone.
+
+Launching (`open -a ContainerBodega`) is optional; don't open a GUI app the user
+didn't ask for. If it opens to an onboarding screen instead of the sidebar, it
+can't find `container`: go back to step 1.
+
+### When something fails
+
+| Error | Cause and fix |
+|-------|---------------|
+| `Refusing to load … from untrusted tap` | A short name was used. Retry with `intrusive-memory/tap/<name>` |
+| macOS version / architecture requirement | Unsupported machine (see rule 3). Stop and tell the user |
+| `SHA256 mismatch` | The release changed after the tap recorded it. Run `brew update` and retry once; if it persists, report it and don't bypass it |
+| A new release isn't visible | `brew update`. The tap can lag a release by up to six hours |
 
 ## Repository Structure
 
@@ -14,8 +107,11 @@ homebrew-tap/
 ├── Casks/            # One .rb file per cask (macOS apps)
 ├── .github/
 │   └── workflows/
-│       └── update-formula.yml  # Auto-updates formulas on release
-├── AGENTS.md         # This file
+│       ├── update-formula.yml      # Push: a source repo dispatches on release
+│       └── reconcile-formulas.yml  # Pull: every 6h, formulas AND casks
+├── scripts/
+│   └── reconcile-formulas.sh       # The reconciler (formulas and casks)
+├── AGENTS.md         # This file (CLAUDE.md and GEMINI.md are symlinks to it)
 └── README.md
 ```
 
@@ -36,6 +132,7 @@ homebrew-tap/
 | `glosa` | [glosa-tools](https://github.com/intrusive-memory/glosa-tools) | 0.5.0 |
 | `hablare` | [SwiftHablare](https://github.com/intrusive-memory/SwiftHablare) | 5.6.0 |
 | `proyecto` | [SwiftProyecto](https://github.com/intrusive-memory/SwiftProyecto) | 4.1.0 |
+| `reparto` | [SwiftReparto](https://github.com/intrusive-memory/SwiftReparto) | 0.1.0 |
 | `secuencia` | [SwiftSecuencia](https://github.com/intrusive-memory/SwiftSecuencia) | 3.3.0 |
 | `vinetas` | [SwiftVinetas](https://github.com/intrusive-memory/SwiftVinetas) | 0.15.7 |
 | `vox` | [vox-format](https://github.com/intrusive-memory/vox-format) | 0.4.1 |
