@@ -11,6 +11,7 @@ This is a Homebrew tap for [Intrusive Memory](https://github.com/intrusive-memor
 ```
 homebrew-tap/
 ├── Formula/          # One .rb file per formula
+├── Casks/            # One .rb file per cask (macOS apps)
 ├── .github/
 │   └── workflows/
 │       └── update-formula.yml  # Auto-updates formulas on release
@@ -38,6 +39,28 @@ homebrew-tap/
 | `secuencia` | [SwiftSecuencia](https://github.com/intrusive-memory/SwiftSecuencia) | 3.3.0 |
 | `vinetas` | [SwiftVinetas](https://github.com/intrusive-memory/SwiftVinetas) | 0.15.7 |
 | `vox` | [vox-format](https://github.com/intrusive-memory/vox-format) | 0.4.1 |
+
+## Casks
+
+| Cask | Source Repo | Downloads From |
+|------|-------------|----------------|
+| `containerbodega` | [ContainerBodega](https://github.com/intrusive-memory/ContainerBodega) (private) | [ContainerBodega-releases](https://github.com/intrusive-memory/ContainerBodega-releases) (public) |
+
+A cask installs a signed, notarized `.app` from a DMG. Because
+ContainerBodega's source repo is private, its release workflow publishes the
+DMG to the public `ContainerBodega-releases` repo, and the cask's `url` points
+there.
+
+Casks have **no push-based update path**. `reconcile-formulas.yml` picks them
+up: it reads the release repo from the cask's `url` (which must be a GitHub
+release download containing `#{version}`), and rewrites only `version` and
+`sha256`. A `sha256 "PLACEHOLDER"` counts as drift even when the version
+already matches, so a new cask can be committed before its first release.
+ContainerBodega's release workflow starts the reconciler right after
+publishing, so the cask normally updates within minutes rather than at the
+next six-hourly run.
+
+Install: `brew install --cask intrusive-memory/tap/containerbodega`.
 
 ## Homebrew Context & Tap Trust
 
