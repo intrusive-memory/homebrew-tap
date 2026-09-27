@@ -1,10 +1,10 @@
 class Vinetas < Formula
   desc "CLI for generating storyboard panels and comic art with FLUX.2 + PixArt-Sigma on Apple Silicon"
   homepage "https://github.com/intrusive-memory/SwiftVinetas"
-  url "https://github.com/intrusive-memory/SwiftVinetas/releases/download/v0.20.0/vinetas-0.20.0-arm64-macos.tar.gz"
-  sha256 "e975c6b10b0e8558627763113984788d3544783bb5b52fcc2bbc60d40746d488"
+  url "https://github.com/intrusive-memory/SwiftVinetas/releases/download/v0.20.1/vinetas-0.20.1-arm64-macos.tar.gz"
+  sha256 "a1ee0da57febdf37b127d6ff857dd72ccd1c4cd58f9a295aa42a526b2844ad5b"
   license "MIT"
-  version "0.20.0"
+  version "0.20.1"
 
   depends_on arch: :arm64
   depends_on macos: :tahoe
