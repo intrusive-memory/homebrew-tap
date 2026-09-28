@@ -1,6 +1,6 @@
 cask "containerbodega" do
-  version "0.2.0"
-  sha256 "c93e9bdb9a50522a1ec5e1a1894b7e273bb4dd168e1cc25863138ab6549cae27"
+  version "0.3.0"
+  sha256 "d9a651541835478c30b918a2ad46fda71f5241a7d18b0ad2717bfeb2de8a894e"
 
   # The source repo is private; its release workflow publishes the signed,
   # notarized DMG to this public releases-only repo instead.
