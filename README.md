@@ -5,7 +5,7 @@ type: reference
 # Homebrew Tap for Intrusive Memory
 
 Homebrew formulas for [Intrusive Memory](https://github.com/intrusive-memory)'s
-command-line tools, and a cask for the **ContainerBodega** Mac app.
+command-line tools, and casks for the **ContainerBodega** and **Escribir** Mac apps.
 
 > **Using an AI agent?** Point it at [AGENTS.md](AGENTS.md#installing-from-this-tap). It has
 > non-interactive install and verification steps.
@@ -26,6 +26,9 @@ works straight away with no other setup. Use the full name for `upgrade` and
 # The ContainerBodega app
 brew install --cask intrusive-memory/tap/containerbodega
 
+# The Escribir app
+brew install --cask intrusive-memory/tap/escribir
+
 # A command-line tool
 brew install intrusive-memory/tap/proyecto
 ```
@@ -41,7 +44,7 @@ once:
 brew tap intrusive-memory/tap
 brew trust intrusive-memory/tap
 brew install proyecto bruja secuencia
-brew install --cask containerbodega
+brew install --cask containerbodega escribir
 ```
 
 Without that trust, a short name fails with *"Refusing to load … from untrusted
@@ -91,6 +94,35 @@ The `BODEGA.md` files in your repositories stay, so you can reopen them.
 You can also download the DMG directly from
 [ContainerBodega-releases](https://github.com/intrusive-memory/ContainerBodega-releases/releases/latest).
 
+## Escribir (cask)
+
+[Escribir](https://escribir.app) is a text editor for Markdown, Fountain and
+plain text. It's Developer ID signed and notarized, so it opens normally, with no
+*Open Anyway* step. It's also on the Mac App Store; this cask is the same app
+through a second channel.
+
+**If you installed Escribir from the App Store**, remove `/Applications/Escribir.app`
+first. The two builds share one bundle id, and Homebrew refuses to overwrite an
+app it didn't install.
+
+```bash
+brew install --cask intrusive-memory/tap/escribir
+open -a Escribir
+```
+
+| Task | Command |
+|------|---------|
+| Update | `brew upgrade --cask intrusive-memory/tap/escribir` |
+| Uninstall | `brew uninstall --cask intrusive-memory/tap/escribir` |
+| Uninstall and remove settings | `brew uninstall --cask --zap intrusive-memory/tap/escribir` |
+
+`--zap` deletes the app's sandbox container and preferences in `~/Library`:
+settings and recent-file bookmarks. Your documents are wherever you saved them
+and are not touched. There is no in-app updater; `brew upgrade` is how it updates.
+
+You can also download the DMG directly from
+[Escribir-releases](https://github.com/intrusive-memory/Escribir-releases/releases/latest).
+
 ## Command-line tools (formulas)
 
 | Formula | Description |
@@ -124,7 +156,7 @@ brew upgrade               # formulas and casks
 
 If you haven't trusted the tap and a package from it doesn't upgrade, upgrade
 it by full name: `brew upgrade intrusive-memory/tap/<name>` (add `--cask` for
-ContainerBodega).
+ContainerBodega and Escribir).
 
 The tap updates itself automatically: new releases of each source repo reach
 it within about six hours at most.
@@ -153,6 +185,7 @@ it within about six hours at most.
 - [SwiftVinetas](https://github.com/intrusive-memory/SwiftVinetas): `vinetas`
 - [vox-format](https://github.com/intrusive-memory/vox-format): `vox`
 - [ContainerBodega-releases](https://github.com/intrusive-memory/ContainerBodega-releases): downloads for the `containerbodega` cask (the app's source is private)
+- [Escribir-releases](https://github.com/intrusive-memory/Escribir-releases): downloads for the `escribir` cask (the app's source is private)
 
 ## License
 
