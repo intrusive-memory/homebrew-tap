@@ -5,8 +5,8 @@ type: reference
 # Agent Instructions — homebrew-tap
 
 This is a Homebrew tap for [Intrusive Memory](https://github.com/intrusive-memory):
-formulas that install pre-built arm64 CLI binaries, and a cask that installs the
-ContainerBodega Mac app. Everything targets macOS 26 (Tahoe)+ on Apple silicon.
+formulas that install pre-built arm64 CLI binaries, and casks that install the
+ContainerBodega and Escribir Mac apps. Everything targets macOS 26 (Tahoe)+ on Apple silicon.
 
 This file has two halves. **Installing from this tap** is for an agent setting
 up a user's machine. Everything from **Repository Structure** on is for an agent
@@ -90,6 +90,39 @@ Launching (`open -a ContainerBodega`) is optional; don't open a GUI app the user
 didn't ask for. If it opens to an onboarding screen instead of the sidebar, it
 can't find `container`: go back to step 1.
 
+### Escribir (cask)
+
+Escribir is a text editor for Markdown, Fountain and plain text. It is also on
+the Mac App Store under the same bundle id, `io.intrusive-memory.Escribir`. If a
+copy from the App Store is at `/Applications/Escribir.app`, Homebrew refuses to
+overwrite it: tell the user and let them remove it before installing. Never
+delete it on your own initiative.
+
+```bash
+# Refuse to proceed over an App Store copy; the user decides what to do with it
+[ ! -d /Applications/Escribir.app ] || echo "/Applications/Escribir.app exists (App Store copy?) — remove it first"
+
+brew install --cask intrusive-memory/tap/escribir
+```
+
+Verify:
+
+```bash
+brew list --cask --versions intrusive-memory/tap/escribir           # -> escribir <version>
+spctl -a -vv /Applications/Escribir.app 2>&1 | grep -q 'source=Notarized Developer ID' \
+  && echo "notarized OK"
+```
+
+Update with `brew upgrade --cask intrusive-memory/tap/escribir`, and remove
+with `brew uninstall --cask intrusive-memory/tap/escribir`. **Don't add `--zap`
+unless the user asked for it**: it deletes the app's sandbox container and
+preferences in `~/Library`. The user's documents are never inside the container
+(they are wherever the user saved them), but recent-file bookmarks and settings
+are. There is no in-app updater; `brew upgrade` is the update path.
+
+Launching (`open -a Escribir`) is optional; don't open a GUI app the user
+didn't ask for.
+
 ### When something fails
 
 | Error | Cause and fix |
@@ -142,11 +175,11 @@ homebrew-tap/
 | Cask | Source Repo | Downloads From |
 |------|-------------|----------------|
 | `containerbodega` | [ContainerBodega](https://github.com/intrusive-memory/ContainerBodega) (private) | [ContainerBodega-releases](https://github.com/intrusive-memory/ContainerBodega-releases) (public) |
+| `escribir` | [Escribir](https://github.com/intrusive-memory/Escribir) (private) | [Escribir-releases](https://github.com/intrusive-memory/Escribir-releases) (public) |
 
-A cask installs a signed, notarized `.app` from a DMG. Because
-ContainerBodega's source repo is private, its release workflow publishes the
-DMG to the public `ContainerBodega-releases` repo, and the cask's `url` points
-there.
+A cask installs a signed, notarized `.app` from a DMG. Both source repos are
+private, so each app's release workflow publishes the DMG to its public
+`<App>-releases` repo, and the cask's `url` points there.
 
 Casks have **no push-based update path**. `reconcile-formulas.yml` picks them
 up: it reads the release repo from the cask's `url` (which must be a GitHub
@@ -157,7 +190,10 @@ ContainerBodega's release workflow starts the reconciler right after
 publishing, so the cask normally updates within minutes rather than at the
 next six-hourly run.
 
-Install: `brew install --cask intrusive-memory/tap/containerbodega`.
+Install: `brew install --cask intrusive-memory/tap/containerbodega` or
+`brew install --cask intrusive-memory/tap/escribir`. Escribir's release workflow
+does not nudge the reconciler, so a new Escribir version reaches the tap on the
+next six-hourly run.
 
 ## Homebrew Context & Tap Trust
 
