@@ -1,5 +1,5 @@
 class Echada < Formula
-  desc "CLI tool for AI-powered cast extraction and voice matching for screenplays"
+  desc "On-device voice generation for screenplay casts"
   homepage "https://github.com/intrusive-memory/SwiftEchada"
   url "https://github.com/intrusive-memory/SwiftEchada/releases/download/v2.1.0/echada-2.1.0-arm64-macos.tar.gz"
   sha256 "5435c9127b92ec1a6d2648e8f78fe40c2d614b48333261f9d550b1b7562799e0"
@@ -7,7 +7,7 @@ class Echada < Formula
   version "2.1.0"
 
   depends_on arch: :arm64
-  depends_on macos: :tahoe
+  depends_on macos: :golden_gate
   depends_on "mlx"
 
   def install
@@ -22,13 +22,14 @@ class Echada < Formula
 
   def caveats
     <<~EOS
-      echada requires Apple Silicon (M1 or later) and macOS Tahoe (26.0+).
+      echada requires Apple Silicon (M1 or later) and macOS 27 or later.
+      On macOS 26, install echada 2.0.x instead.
 
-      On first run, echada will download ML models from Hugging Face:
-        - LLM for character extraction (~4 GB) to ~/Library/SharedModels/
-        - TTS model for voice generation (~3.5 GB) to ~/Library/SharedModels/
+      Voice prompts use the on-device Apple Intelligence model by default
+      (`--llm`); cloud models are set up with `echada auth login`.
 
-      This is a one-time download and requires an internet connection.
+      On first use, echada downloads the Qwen3-TTS voice models (~3.5 GB)
+      to the shared model cache. This is a one-time download.
     EOS
   end
 
