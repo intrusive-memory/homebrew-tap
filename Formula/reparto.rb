@@ -1,10 +1,10 @@
 class Reparto < Formula
   desc "CLI for validating and importing CAST.md cast documents"
   homepage "https://github.com/intrusive-memory/SwiftReparto"
-  url "https://github.com/intrusive-memory/SwiftReparto/releases/download/v0.1.0/reparto-0.1.0-arm64-macos.tar.gz"
-  sha256 "a1f132888ed012d7a4e509d9c19b3d3a87ec8fd86d93d3f36c475198446b9f9a"
+  url "https://github.com/intrusive-memory/SwiftReparto/releases/download/v0.2.0/reparto-0.2.0-arm64-macos.tar.gz"
+  sha256 "423d6d8c1587a1ba8f66bda3fd56a0c3913210bf5a29c501ce83398392aa3cc0"
   license "MIT"
-  version "0.1.0"
+  version "0.2.0"
 
   depends_on arch: :arm64
   depends_on macos: :tahoe
