@@ -1,6 +1,6 @@
 cask "escribir" do
   version "1.2.0"
-  sha256 "PLACEHOLDER"
+  sha256 "00891c7389479d2d46917cc8d056e433a3db07012a2f4a3b652f5acac49cc1fe"
 
   # The source repo is private; its release workflow publishes the signed,
   # notarized DMG to this public releases-only repo instead.
