@@ -1,10 +1,10 @@
 class Echada < Formula
   desc "On-device voice generation for screenplay casts"
   homepage "https://github.com/intrusive-memory/SwiftEchada"
-  url "https://github.com/intrusive-memory/SwiftEchada/releases/download/v3.1.0/echada-3.1.0-arm64-macos.tar.gz"
-  sha256 "4c58f87272ed87ef86583adcde166165db94ec6e4e41be44a8fed448afd0a102"
+  url "https://github.com/intrusive-memory/SwiftEchada/releases/download/v3.1.1/echada-3.1.1-arm64-macos.tar.gz"
+  sha256 "f38dc59b23a8b8a81c7ab4509451871fb13b14fe638f651407c701cb2cdaefc4"
   license "MIT"
-  version "3.1.0"
+  version "3.1.1"
 
   depends_on arch: :arm64
   depends_on macos: :golden_gate
