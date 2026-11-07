@@ -72,7 +72,11 @@ for formula_file in Formula/*.rb; do
   fi
   latest="${latest_tag#v}"
 
-  if [ "$current" = "$latest" ]; then
+  # A PLACEHOLDER sha256 is drift even when the version already matches: a new
+  # formula is committed with one before its first stable release, often at the
+  # version that release will carry (same rule as casks below).
+  current_sha="$(perl -ne 'print "$1\n" and exit if m{^\s*sha256\s+"([^"]+)"}' "$formula_file")"
+  if [ "$current" = "$latest" ] && [[ "$current_sha" != PLACEHOLDER* ]]; then
     OK+=("${formula}: ${current}")
     continue
   fi
