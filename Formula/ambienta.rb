@@ -10,16 +10,24 @@ class Ambienta < Formula
   depends_on macos: :tahoe
 
   def install
-    bin.install "ambienta"
+    # Install binary and Metal bundle to libexec (keeps them colocated).
+    # MLX resolves the Metal shader bundle relative to the binary's real location,
+    # so the bundle must sit next to the executable, not in bin/.
+    libexec.install "ambienta"
+    libexec.install "mlx-swift_Cmlx.bundle"
+    (bin/"ambienta").write_env_script libexec/"ambienta", {}
   end
 
   def caveats
     <<~EOS
       ambienta requires Apple Silicon (M1 or later) and macOS Tahoe (26.0+).
 
-      The shipping engine is a procedural (filtered-noise) generator and needs no
-      model download. The neural Stable Audio backend is staged for a future
-      release.
+      When the Stable Audio 3 Small SFX model is installed, ambienta renders with
+      the neural backend; otherwise it uses a procedural (filtered-noise)
+      generator that needs no download. The model (~3.5 GB) comes from the
+      intrusive-memory CDN via SwiftAcervo; override with ACERVO_CDN_BASE_URL.
+      Neural output is subject to the Stability AI Community License and the
+      Gemma Terms of Use -- see the SwiftAmbiente README.
 
       Generate a background bed from a built-in scene:
         ambienta --scene rain -d 30 -o rain.wav
