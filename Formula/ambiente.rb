@@ -2,7 +2,7 @@ class Ambiente < Formula
   desc "Generate atmospheric / foley background beds from a text prompt or scene preset"
   homepage "https://github.com/intrusive-memory/SwiftAmbiente"
   url "https://github.com/intrusive-memory/SwiftAmbiente/releases/download/v0.1.0/ambiente-0.1.0-arm64-macos.tar.gz"
-  sha256 "PLACEHOLDER_SHA256"
+  sha256 "52401a643e6f3a23e1b3ffd1e75dcf281cdd619095033a8fa879a5b7b5452a33"
   license "MIT"
   version "0.1.0"
 
