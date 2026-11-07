@@ -128,7 +128,7 @@ You can also download the DMG directly from
 | Formula | Description |
 |---------|-------------|
 | `acervo` | Download, verify and mirror AI models to the intrusive-memory CDN |
-| `ambienta` | Generate atmospheric / foley background beds from a text prompt or scene preset |
+| `ambiente` | Generate atmospheric / foley background beds from a text prompt or scene preset |
 | `bruja` | On-device LLM queries on Apple silicon |
 | `diga` | Drop-in replacement for macOS `say`, using Qwen3-TTS |
 | `echada` | Screenplay character extraction and voice casting |
@@ -173,7 +173,7 @@ it within about six hours at most.
 ## Source repositories
 
 - [SwiftAcervo](https://github.com/intrusive-memory/SwiftAcervo): `acervo`
-- [SwiftAmbiente](https://github.com/intrusive-memory/SwiftAmbiente): `ambienta`
+- [SwiftAmbiente](https://github.com/intrusive-memory/SwiftAmbiente): `ambiente`
 - [SwiftBruja](https://github.com/intrusive-memory/SwiftBruja): `bruja`
 - [SwiftVoxAlta](https://github.com/intrusive-memory/SwiftVoxAlta): `diga`
 - [SwiftEchada](https://github.com/intrusive-memory/SwiftEchada): `echada`

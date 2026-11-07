@@ -49,7 +49,7 @@ brew install intrusive-memory/tap/<formula>
 <formula> --version                                   # verify
 ```
 
-The formulas are `acervo`, `ambienta`, `bruja`, `diga`, `echada`, `glosa`,
+The formulas are `acervo`, `ambiente`, `bruja`, `diga`, `echada`, `glosa`,
 `proyecto`, `reparto`, `secuencia`, `vinetas` and `vox`. `hablare` is **disabled**
 (its repo went library-only), so install `diga` for command-line TTS instead.
 
@@ -158,7 +158,7 @@ homebrew-tap/
 | Formula | Source Repo | Current Version |
 |---------|-------------|-----------------|
 | `acervo` | [SwiftAcervo](https://github.com/intrusive-memory/SwiftAcervo) | 0.20.0 |
-| `ambienta` | [SwiftAmbiente](https://github.com/intrusive-memory/SwiftAmbiente) | 0.1.0 |
+| `ambiente` | [SwiftAmbiente](https://github.com/intrusive-memory/SwiftAmbiente) | 0.1.0 |
 | `bruja` | [SwiftBruja](https://github.com/intrusive-memory/SwiftBruja) | 1.8.1 |
 | `diga` | [SwiftVoxAlta](https://github.com/intrusive-memory/SwiftVoxAlta) | 0.14.0 |
 | `echada` | [SwiftEchada](https://github.com/intrusive-memory/SwiftEchada) | 0.14.1 |
